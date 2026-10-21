@@ -69,6 +69,19 @@ extension Player {
 
   // MARK: - Video
 
+  /// Stops or restarts video decoding while audio keeps playing, for
+  /// listening with the screen locked. Enabling selects the first video
+  /// track; it does nothing while the current media has no native handle.
+  public func setVideoEnabled(_ enabled: Bool) {
+    guard nativeHandleRepresentsCurrentMedia else { return }
+    if enabled {
+      guard let id = videoTracks.first?.id else { return }
+      id.withCString { libvlc_media_player_select_tracks_by_ids(pointer, libvlc_track_video, $0) }
+    } else {
+      libvlc_media_player_unselect_track_type(pointer, libvlc_track_video)
+    }
+  }
+
   func applyAspectRatio() {
     applyAspectRatio(_aspectRatio, to: pointer)
   }
