@@ -46,8 +46,8 @@ jobs:
   check:
     # setup-dev.sh resolves the package with Xcode's built-in SwiftPM,
     # which must understand the manifest's Swift 6.3 tools-version —
-    # needs Xcode 26.4+, hence macos-26 (same rationale as test.yml).
-    runs-on: macos-26
+    # needs Xcode 26.4+, hence xcode-27 (same rationale as test.yml).
+    runs-on: xcode-27
     # GitHub hides draft releases from read-only installation tokens. The
     # resolver below separately authenticates and binds the exact candidate.
     permissions:
@@ -62,7 +62,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         timeout-minutes: 5
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
 
       # The libvlc xcframework dominates the artifact cache.
       - name: Cache libvlc xcframework

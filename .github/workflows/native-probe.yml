@@ -18,7 +18,7 @@ concurrency:
 jobs:
   released-native-probe:
     if: ${{ !inputs.retained-run }}
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -26,7 +26,7 @@ jobs:
           persist-credentials: false
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
       - name: Resolve declared public engine
         timeout-minutes: 10
         env:
@@ -49,7 +49,7 @@ jobs:
 
   retained-source-probe:
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.retained-run != '' }}
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 25
     permissions:
       contents: read
@@ -61,7 +61,7 @@ jobs:
           persist-credentials: false
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
       - name: Reconstruct retained source and repeat source-linked probes
         timeout-minutes: 22
         env:

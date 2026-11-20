@@ -52,7 +52,7 @@ jobs:
       fail-fast: false
       matrix:
         sanitizer: [thread, address]
-    runs-on: macos-26
+    runs-on: xcode-27
     # GitHub hides draft releases from read-only installation tokens. The
     # resolver below separately authenticates and binds the exact candidate.
     permissions:
@@ -68,7 +68,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         timeout-minutes: 5
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
 
       - uses: SwiftyLab/setup-swift@38f54a76b70d989321de9dc7c840618c08cf56e9 # v1.14.0
         timeout-minutes: 8

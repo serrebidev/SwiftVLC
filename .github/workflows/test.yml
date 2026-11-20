@@ -50,7 +50,7 @@ jobs:
   native-build:
     needs: native-changes
     if: needs.native-changes.outputs.build == 'true'
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 200
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -58,7 +58,7 @@ jobs:
           persist-credentials: false
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
       - uses: SwiftyLab/setup-swift@38f54a76b70d989321de9dc7c840618c08cf56e9 # v1.14.0
         with:
           swift-version: "6.3.1"
@@ -160,7 +160,7 @@ jobs:
   # `.swiftlint.yml` and `.swiftformat`; both run with --strict so
   # warnings are treated as errors.
   lint:
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -288,7 +288,7 @@ jobs:
     # Showcase matrix must run on an image with Xcode 26.4+.
     permissions:
       contents: write
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 40
     strategy:
       fail-fast: false
@@ -312,7 +312,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         timeout-minutes: 5
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
 
       - name: Print toolchain
         id: environment
@@ -362,8 +362,8 @@ jobs:
   ios-build:
     # xcodebuild resolves the package with Xcode's built-in SwiftPM, which
     # must understand the manifest's Swift 6.3 tools-version — needs Xcode
-    # 26.4+, hence macos-26 (same rationale as the showcase job above).
-    runs-on: macos-26
+    # 26.4+, hence xcode-27 (same rationale as the showcase job above).
+    runs-on: xcode-27
     # Reading a draft release requires push-level repository access. GitHub
     # downgrades fork pull-request tokens to read-only, and draft authorization
     # below independently requires the exact same-repository candidate PR.
@@ -382,7 +382,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         timeout-minutes: 5
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
 
       - name: Cache libvlc xcframework
         uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
@@ -501,10 +501,10 @@ jobs:
     if: ${{ github.event_name != 'pull_request' || (github.event.pull_request.head.repo.full_name == github.repository && startsWith(github.head_ref, 'release-candidates/')) }}
     # Same rationale as ios-build: xcodebuild resolves the package with
     # Xcode's built-in SwiftPM, which must understand the manifest's Swift
-    # 6.3 tools-version — needs Xcode 26.4+, hence macos-26.
+    # 6.3 tools-version — needs Xcode 26.4+, hence xcode-27.
     permissions:
       contents: write
-    runs-on: macos-26
+    runs-on: xcode-27
     timeout-minutes: 40
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -515,7 +515,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         timeout-minutes: 5
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
 
       - name: Cache libvlc xcframework
         uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25 # v5
@@ -577,7 +577,7 @@ jobs:
     # 6.3 patch is Swift 6.3.1 in Xcode 26.4.1. GHA runner toolchains
     # can lag, so we install the Swift 6.3.1 open-source toolchain from
     # swift.org and activate it via the TOOLCHAINS env var.
-    runs-on: macos-26
+    runs-on: xcode-27
     # See ios-build: write-level contents permission makes the draft visible;
     # it does not replace the resolver's exact candidate identity checks.
     permissions:
@@ -610,7 +610,7 @@ jobs:
       - uses: maxim-lobanov/setup-xcode@ed7a3b1fda3918c0306d1b724322adc0b8cc0a90 # v1
         timeout-minutes: 5
         with:
-          xcode-version: "26.4"
+          xcode-version: "27.2"
 
       # Install Swift 6.3.1 open-source toolchain from swift.org.
       # Exports $TOOLCHAINS — later steps use `xcrun --toolchain` to run
